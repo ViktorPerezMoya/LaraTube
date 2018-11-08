@@ -10,7 +10,7 @@ class Video extends Model
     
     //relacion uno a muchos
     public function  comentarios(){
-        return $this->hasMany('App\Comentario');
+        return $this->hasMany('App\Comentario')->orderBy('id', 'desc');
     }
     
     public function likevideo(){

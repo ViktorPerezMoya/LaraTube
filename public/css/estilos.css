@@ -1,0 +1,22 @@
+.video-imagen-mascara{
+    height: 100px;
+    width: 150px;
+    overflow: hidden;
+}
+.video-imagen-mascara .video-imagen{
+    width: 105%;
+    height: 100%;
+}
+
+#videos-lista .panel-body{
+    padding-left: 0px;
+}
+
+.video-titulo{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.video-titulo a{
+    color: #444;
+}

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/estilos.css')}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,7 +29,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/home') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -38,9 +39,9 @@
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
-                    <form class="navbar-form navbar-left" role="search" action="">
+                    <form class="navbar-form navbar-left" role="search" action="{{ url('/buscar') }}">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="¿Que quieres ver?" name="buscar"/>
+                            <input type="text" class="form-control" placeholder="¿Que quieres ver?" name="search"/>
                         </div>
                         <button type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-search"></span>
@@ -84,7 +85,12 @@
 
         @yield('content')
     </div>
-
+    
+    <footer class="col-md-10 col-md-offset-1"> 
+        <hr>
+        <p>Curso de Laravel 5 perezmoya.com.ar 2018</p>
+    </footer>
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

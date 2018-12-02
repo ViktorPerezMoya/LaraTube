@@ -14,7 +14,7 @@
         <div class="panel panel-default panel-data">
             <div class="panel-heading">
                 <div class="panel-title">
-                    Subido por <strong>{{ $video->usuario->nombre }}</strong> {{ \FormatTime::LongTimeFilter($video->created_at) }}
+                    Subido por <strong><a href="{{ route("canal", ['user_id' => $video->usuario->id]) }}">{{ $video->usuario->nombre }}</a></strong> {{ \FormatTime::LongTimeFilter($video->created_at) }}
                 </div>
             </div>
             <div class="panel-body">

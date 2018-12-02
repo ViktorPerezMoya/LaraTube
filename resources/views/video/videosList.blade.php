@@ -13,7 +13,7 @@
             @endif
             <div class="data">
                 <a href="{{ route('videoDetalle', array('video_id' => $video->id))}}"><h4 class="video-titulo">{{ $video->titulo }}</h4></a>
-                <p>{{ $video->usuario->nombre }}</p>
+                <p><a href="{{ route("canal", ['user_id' => $video->usuario->id]) }}">{{ $video->usuario->nombre }}</a>  | {{ \FormatTime::LongTimeFilter($video->created_at) }}</p>
             </div>
             <a href="{{ route('videoDetalle', array('video_id' => $video->id)) }}" class="btn btn-primary btn-sm">Ver</a>
             @if(Auth::check() && Auth::user()->id == $video->usuario->id)

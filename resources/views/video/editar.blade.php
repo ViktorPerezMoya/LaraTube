@@ -45,6 +45,15 @@
                 </video>
                 <input type="file" id="video" name="video">
             </div>
+            <div class="form-group">
+                <label for="playlist">Lista de Reproduccion</label>
+                <select class="form-control" name="playlist">
+                    <option value="">Seleccione...</option>
+                    @foreach($listas as $lista)
+                    <option value="{{$lista->id}}" <?= ($video->playlist_id == $lista->id ? 'selected' : '')?>>{{ $lista->titulo }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button class="btn btn-success" type="submit">Guardar cambios</button>
         </form>
     </div>

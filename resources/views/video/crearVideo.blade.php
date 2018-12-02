@@ -32,6 +32,15 @@
                 <label for="video">Video</label>
                 <input type="file" id="video" name="video">
             </div>
+            <div class="form-group">
+                <label for="playlist">Lista de Reproduccion</label>
+                <select class="form-control" name="playlist">
+                    <option value="">Seleccione...</option>
+                    @foreach($listas as $lista)
+                    <option value="{{$lista->id}}">{{ $lista->titulo }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button class="btn btn-success" type="submit">Crear video</button>
         </form>
     </div>

@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 //rutas del controlador de videosr
 Route::get('/crear-video',array(
@@ -77,7 +77,46 @@ Route::post('/update-video/{video_id}',array(
     'uses' => 'VideoController@update'
 ));
 
-Route::get('/buscar/{search?}',array(
+Route::get('/buscar/{search?}/{filtro?}',array(
     'as' => 'videoSearch',
     'uses' => 'VideoController@search'
 ));
+
+/* ruta para borrar cache de Laravel */
+Route::get('clear-cache',function(){
+    $code = Artisan::call('cache:clear');
+});
+
+Route::get('/canal/{user_id}',array(
+    'as' => 'canal',
+    'uses' => 'UserController@canal'
+));
+
+Route::get('/play-lists/{user_id}',array(
+    'as' => 'playLists',
+    'uses'=>'VideoController@playLists'
+));
+
+Route::get('new_play_list', array(
+    'as' => 'newPlayList',
+    'middleware' => 'auth',
+    'uses'=>'VideoController@newPlayList'
+));
+
+Route::post('/insert_playlist',array(
+    'as' => 'insertPlayList',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@insertPlayList'
+));
+
+Route::get('/editar_playlist/{playlist_id}',[
+    'as' => 'editarPlayList',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@editarPlayList'
+]);
+
+Route::post('/update_playlist',[
+    'as' => 'updatePlayList',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@updatePlayList'
+]);

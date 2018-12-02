@@ -29,7 +29,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/home') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -55,15 +55,22 @@
                             <li><a href="{{ route('register') }}">Registtrarse</a></li>
                             
                         @else
-                        <li>
-                            <a href="{{ url('/crear-video') }}">Subir Video</a>
-                        </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ auth()->user()->nombre }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ url('/crear-video') }}">Subir Video</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/canal/'.auth()->user()->id) }}">Mi Canal</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('/play-lists/'.auth()->user()->id) }}">Playlists</a>
+                                    </li>
+                                    <hr>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

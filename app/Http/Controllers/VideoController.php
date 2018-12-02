@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Video;
 use App\Playlist;
 use App\Comentario;
+use App\Likevideo;
 
 class VideoController extends Controller
 {
@@ -63,8 +64,12 @@ class VideoController extends Controller
     }
     
     public function getVideoDetalle($video_id){
-        $video = Video::find($video_id);
-        return view('video.detalle', array('video' => $video));
+        $data['video'] = Video::find($video_id);
+        $liked_arr = Likevideo::where('liked',true)->where('video_id','=',$video_id)->get();
+        $data['liked_count'] = count($liked_arr);
+        $disliked_arr = Likevideo::where('disliked',true)->where('video_id','=',$video_id)->get();
+        $data['disliked_count'] = count($disliked_arr);
+        return view('video.detalle', $data);
     }
     
     public function getVideo($filename){
@@ -227,5 +232,44 @@ class VideoController extends Controller
         $playlist->update();
         $data['user_id'] = $request->input('usuario_id');
         return redirect()->route('playLists',$data)->with('mensaje', 'La lista de reproduccion se ha modificado exitosamente!');
+    }
+    public function like(Request $request){
+        $like = $request->input('like');
+        $video_id = $request->input('video_id');
+        $user_id = \Auth()->user()->id;
+        
+        $lk_entity = Likevideo::where('video_id','=',$video_id)->where('usuario_id','=', \Auth()->user()->id)->get();
+        $insertar = false;
+        if(count($lk_entity) == 0){
+            $insertar =  true;
+            $lk_entity = new Likevideo();
+        }else{
+            $lk_entity =  $lk_entity[0];
+        }
+        
+        $lk_entity->video_id = $video_id;
+        $lk_entity->usuario_id = $user_id;
+        
+        if(settype($like, 'boolean')){
+            $lk_entity->liked = true;
+            $lk_entity->disliked = false;
+        }else{
+            $lk_entity->liked = false;
+            $lk_entity->disliked = true;
+        }
+        if($insertar){
+            $lk_entity->save();
+        }  else {
+            Likevideo::where('usuario_id','=',$user_id)->where('video_id','=',$video_id)->update($lk_entity->toArray());
+        }
+        
+        
+        $liked_arr = Likevideo::where('liked',true)->where('video_id','=',$video_id)->get();
+        $data['liked_count'] = count($liked_arr);
+        $disliked_arr = Likevideo::where('disliked',true)->where('video_id','=',$video_id)->get();
+        $data['disliked_count'] = count($disliked_arr);
+        
+        return response()->json($data);
+        
     }
 }

@@ -120,3 +120,8 @@ Route::post('/update_playlist',[
     'middleware' => 'auth',
     'uses' => 'VideoController@updatePlayList'
 ]);
+
+Route::post('/like',[
+    'as' => 'like',
+    'uses' => 'VideoController@like'
+]);
